@@ -1,0 +1,57 @@
+Objective: Create metadata objects from annotated java code
+
+Metadata extraction process:
+
+Input: a class 
+
+-for every field, process annotations and generate field metadata collection (multiple metadata 
+objects may be extracted from an annotated field)
+-process class annotations, and generate object metadata collection, or override field metadata
+
+Each annotation will belong to a certain metadata type
+An annotable element can have annotations that belong to more metadata types
+As a result, after processing an annotable element a list of metadatas will be obtained
+
+Base metadatas:
+
+-Object metadata
+-Field metadata 
+-Array metadata
+-Collection metadata
+-Map metadata
+
+Custom metadatas may be defined, that extend these base metadatas, and for each of them 
+a set of annotations will also be defined.
+
+Problems:
+
+How do we handle annotations? 
+How do we build the metadatas from annotations?
+Where/when do we create the metadatas?
+How do we obtain the right type of metadata for each annotation?
+Where do we store each type of metadata?
+
+
+
+Steps in building the metadata:
+
+
+
+
+
+
+
+AnnotableElements ( Class,Field,Methods, etc)
+
+MetadataBuilder for a type of annotable element
+
+-for an annotable element, a metabuilder:
+	- creates a metadata object from a factory
+	- create an annotable element context
+	- sets the medata object on the context
+	- processes all the annotations for that element and saves state on the context
+	- saves the super annotable elements on the context
+	- starting from the root element processes all the nested annotable elements for
+	each element until the original element is also processed
+	- for each nested element a context is created and saved on the parent context
+	- the metadata for this element is returned 
