@@ -48,7 +48,7 @@ MetadataBuilder for a type of annotable element
 -for an annotable element, a metabuilder:
 	- creates a metadata object from a factory
 	- create an annotable element context
-	- sets the medata object on the context
+	- sets the metadata object on the context
 	- processes all the annotations for that element and saves state on the context
 	- saves the super annotable elements on the context
 	- starting from the root element processes all the nested annotable elements for
