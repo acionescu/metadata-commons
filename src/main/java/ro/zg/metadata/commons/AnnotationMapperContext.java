@@ -13,8 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package ro.zg.metadata.exceptions;
+package ro.zg.metadata.commons;
 
-public enum MetadataErrorType {
-    GET_FIELD_ERROR, SET_FIELD_ERROR, UNKNOWN_OBJECT_TYPE;
+import java.lang.annotation.Annotation;
+
+public class AnnotationMapperContext<A extends Annotation, M extends Metadata<?>> {
+    private A annotation;
+    private M metadata;
+    
+    
+    public AnnotationMapperContext(A annotation, M metadata) {
+	super();
+	this.annotation = annotation;
+	this.metadata = metadata;
+    }
+
+
+    public A getAnnotation() {
+        return annotation;
+    }
+
+
+    public void setAnnotation(A annotation) {
+        this.annotation = annotation;
+    }
+
+
+    public M getMetadata() {
+        return metadata;
+    }
+
+
+    public void setMetadata(M metadata) {
+        this.metadata = metadata;
+    }
+    
+    
+    
 }

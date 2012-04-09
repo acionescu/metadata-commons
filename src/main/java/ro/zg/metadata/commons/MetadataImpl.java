@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2011 Adrian Cristian Ionescu
+ * Copyright 2012 AdrianIonescu
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -159,7 +159,7 @@ public class MetadataImpl<T> implements Metadata<T>{
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	MetadataImpl other = (MetadataImpl) obj;
+	MetadataImpl<T> other = (MetadataImpl<T>) obj;
 	if (complexType != other.complexType)
 	    return false;
 	if (multivalued != other.multivalued)

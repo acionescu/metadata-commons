@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2011 Adrian Cristian Ionescu
+ * Copyright 2012 AdrianIonescu
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ package ro.zg.metadata.commons;
 import java.lang.annotation.Annotation;
 
 
-public class AnnotationProcessorContext<A extends Annotation, M extends MetadataContext<?>> {
+public class AnnotationProcessorContext<A extends Annotation, C extends MetadataContext<?, ? extends Metadata<?>>> {
     private A annotation;
-    private M metadataContext;
+    private C metadataContext;
     
     public AnnotationProcessorContext() {
 	super();
@@ -33,7 +33,7 @@ public class AnnotationProcessorContext<A extends Annotation, M extends Metadata
     
     
 
-    public AnnotationProcessorContext(A annotation, M metadataContext) {
+    public AnnotationProcessorContext(A annotation, C metadataContext) {
 	super();
 	this.annotation = annotation;
 	this.metadataContext = metadataContext;
@@ -56,14 +56,14 @@ public class AnnotationProcessorContext<A extends Annotation, M extends Metadata
     /**
      * @return the metadataContext
      */
-    public M getMetadataContext() {
+    public C getMetadataContext() {
         return metadataContext;
     }
 
     /**
      * @param metadataContext the metadataContext to set
      */
-    public void setMetadataContext(M metadataContext) {
+    public void setMetadataContext(C metadataContext) {
         this.metadataContext = metadataContext;
     }
 }

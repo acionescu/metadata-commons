@@ -15,10 +15,26 @@
  ******************************************************************************/
 package ro.zg.metadata.managers;
 
-import ro.zg.metadata.commons.Metadata;
+import ro.zg.metadata.commons.MultitypeMetadata;
+import ro.zg.metadata.commons.MultitypeMetadataManager;
+import ro.zg.metadata.commons.ObjectMetadata;
+import ro.zg.metadata.commons.ObjectMetadataManagerConfig;
 import ro.zg.metadata.exceptions.MetadataException;
 
-public interface MetadataManager {
+public class ObjectMetadataManager extends GenericObjectMultitypeMetadataManager implements MultitypeMetadataManager{
 
-    <T, M extends Metadata<?>> M getMetadata(T input) throws MetadataException;
+    public ObjectMetadataManager(ObjectMetadataManagerConfig config) {
+	super(config);
+    }
+
+    public <T> MultitypeMetadata<T, ObjectMetadata<T,?>> getObjectMultitypeMetadata(Class<T> clazz) throws MetadataException{
+	return (MultitypeMetadata<T, ObjectMetadata<T,?>>)super.getMetadata(clazz);
+    }
+
+    public <T, M extends ObjectMetadata<T,?>> M getobjectMetadata(T input, String type) throws MetadataException {
+	return (M)getMetadata(input, type);
+    }
+
+   
+    
 }

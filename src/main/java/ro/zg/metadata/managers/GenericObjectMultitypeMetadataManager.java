@@ -13,17 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package ro.zg.metadata.factories;
+package ro.zg.metadata.managers;
 
-import java.lang.reflect.GenericArrayType;
+import ro.zg.metadata.commons.Metadata;
+import ro.zg.metadata.commons.MultitypeMetadata;
+import ro.zg.metadata.commons.MultitypeMetadataManager;
+import ro.zg.metadata.commons.ObjectMetadataManagerConfig;
+import ro.zg.metadata.exceptions.MetadataException;
 
-import ro.zg.metadata.commons.ArrayMetadata;
+public class GenericObjectMultitypeMetadataManager extends GenericObjectMetadataManager implements MultitypeMetadataManager{
 
-public class ArrayMetadataFactory implements MetadataFactory<GenericArrayType, ArrayMetadata<?>>{
-
-    @Override
-    public ArrayMetadata<?> createMetadata(GenericArrayType type) {
-	return new ArrayMetadata(type);
+    public GenericObjectMultitypeMetadataManager(
+	    ObjectMetadataManagerConfig config) {
+	super(config);
     }
 
+    @Override
+    public <T, N extends Metadata<?>> N getMetadata(T input, String type) throws MetadataException {
+	MultitypeMetadata<T, Metadata<?>> mt = (MultitypeMetadata<T, Metadata<?>>)getMetadata(input);
+	return (N)mt.getMetadataByType(type);
+    }
+    
+   
 }

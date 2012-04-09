@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2011 Adrian Cristian Ionescu
+ * Copyright 2012 AdrianIonescu
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.lang.annotation.Annotation;
 import ro.zg.metadata.exceptions.MetadataException;
 
 
-public interface AnnotationMapper<C extends AnnotationProcessorContext<? extends Annotation,? extends Metadata<?>>> {
+public interface AnnotationMapper<C extends AnnotationMapperContext<? extends Annotation,? extends Metadata<?>>> {
 
     void map(C amc) throws MetadataException;
 }
