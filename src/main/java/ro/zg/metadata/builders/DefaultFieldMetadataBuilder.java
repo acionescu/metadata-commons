@@ -15,31 +15,24 @@
  ******************************************************************************/
 package ro.zg.metadata.builders;
 
-import java.lang.reflect.ParameterizedType;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 
-import ro.zg.metadata.commons.CollectionMetadata;
-import ro.zg.metadata.commons.MetadataContext;
-import ro.zg.metadata.exceptions.MetadataException;
+import ro.zg.metadata.commons.AnnotationProcessorContext;
+import ro.zg.metadata.commons.FieldMetadataImpl;
+import ro.zg.metadata.commons.MultitypeMetadata;
+import ro.zg.metadata.commons.MultitypeMetadataContext;
 import ro.zg.metadata.factories.MetadataContextFactory;
-import ro.zg.metadata.managers.ObjectMetadataManager;
+import ro.zg.metadata.managers.MetadataManager;
+import ro.zg.metadata.mappers.FieldAnnotationMappersManager;
 
-public class CollectionMetadataBuilder extends AbstractMetadataBuilder<ParameterizedType, CollectionMetadata<?>,MetadataContext<ParameterizedType,CollectionMetadata<?>>> {
+public class DefaultFieldMetadataBuilder extends FieldMetadataBuilder<FieldMetadataImpl<?>>{
 
-    public CollectionMetadataBuilder(
-	    MetadataContextFactory<ParameterizedType, CollectionMetadata<?>, MetadataContext<ParameterizedType, CollectionMetadata<?>>> metadataContextFactory,
-	    ObjectMetadataManager metadataManager) {
+    public DefaultFieldMetadataBuilder(
+	    MetadataContextFactory<Field, MultitypeMetadata<Field, FieldMetadataImpl<?>>, MultitypeMetadataContext<Field, FieldMetadataImpl<?>>> metadataContextFactory,
+	    MetadataManager metadataManager) {
 	super(metadataContextFactory, metadataManager);
+	setAnnotationMappersManager(new FieldAnnotationMappersManager<AnnotationProcessorContext<? extends Annotation,MultitypeMetadataContext<Field,FieldMetadataImpl<?>>>>());
     }
-
-    @Override
-    protected void buildFromMetadataContext(MetadataContext<ParameterizedType, CollectionMetadata<?>> metadataContext)
-	    throws MetadataException {
-	
-    }
-
-   
-
-   
-
 
 }

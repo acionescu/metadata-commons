@@ -22,24 +22,33 @@ import java.util.Map;
 import ro.zg.metadata.commons.CollectionMetadata;
 import ro.zg.metadata.commons.MapMetadata;
 import ro.zg.metadata.commons.Metadata;
+import ro.zg.metadata.commons.MetadataContext;
 import ro.zg.metadata.exceptions.MetadataException;
-import ro.zg.metadata.managers.GenericObjectMetadataManager;
+import ro.zg.metadata.factories.MetadataContextFactory;
+import ro.zg.metadata.managers.ObjectMetadataManager;
 import ro.zg.util.data.reflection.ReflectionUtility;
 
-public class ParameterizedTypeMetadataBuilder implements MetadataBuilder<ParameterizedType, Metadata<?>>{
-    private GenericObjectMetadataManager metadataManager;
+public class ParameterizedTypeMetadataBuilder implements
+	MetadataBuilder<ParameterizedType, Metadata<?>> {
+    private ObjectMetadataManager metadataManager;
     private MetadataBuilder<ParameterizedType, ? extends CollectionMetadata<?>> collectionMetadataBuilder;
     private MetadataBuilder<ParameterizedType, ? extends MapMetadata<?, ?>> mapMetadataBuilder;
-    
-    
-    public ParameterizedTypeMetadataBuilder(GenericObjectMetadataManager objectMetadataManager) {
+
+    public ParameterizedTypeMetadataBuilder(
+	    MetadataContextFactory<?, ? extends Metadata<?>, ? extends MetadataContext<?, Metadata<?>>> metadataContextFactory,
+	    ObjectMetadataManager objectMetadataManager) {
 	super();
 	this.metadataManager = objectMetadataManager;
-	collectionMetadataBuilder = new CollectionMetadataBuilder((GenericObjectMetadataManager)objectMetadataManager);
-	mapMetadataBuilder = new MapMetadataBuilder((GenericObjectMetadataManager)objectMetadataManager);
+	collectionMetadataBuilder = new CollectionMetadataBuilder(
+		(MetadataContextFactory) metadataContextFactory,
+		objectMetadataManager);
+	mapMetadataBuilder = new MapMetadataBuilder(
+		(MetadataContextFactory) metadataContextFactory,
+		objectMetadataManager);
     }
-    
-    public ParameterizedTypeMetadataBuilder(GenericObjectMetadataManager objectMetadataManager,
+
+    public ParameterizedTypeMetadataBuilder(
+	    ObjectMetadataManager objectMetadataManager,
 	    MetadataBuilder<ParameterizedType, ? extends CollectionMetadata<?>> collectionMetadataBuilder,
 	    MetadataBuilder<ParameterizedType, ? extends MapMetadata<?, ?>> mapMetadataBuilder) {
 	super();
@@ -48,11 +57,9 @@ public class ParameterizedTypeMetadataBuilder implements MetadataBuilder<Paramet
 	this.mapMetadataBuilder = mapMetadataBuilder;
     }
 
-
-
-
     @Override
-    public Metadata<?> buildMetadata(ParameterizedType pt) throws MetadataException {
+    public Metadata<?> buildMetadata(ParameterizedType pt)
+	    throws MetadataException {
 	Class<?> clazz = (Class<?>) pt.getRawType();
 	if (ReflectionUtility.checkInstanceOf(clazz, Collection.class)) {
 	    return collectionMetadataBuilder.buildMetadata(pt);
@@ -62,53 +69,51 @@ public class ParameterizedTypeMetadataBuilder implements MetadataBuilder<Paramet
 	return metadataManager.getMetadata(clazz);
     }
 
-
     /**
      * @return the collectionMetadataBuilder
      */
     public MetadataBuilder<ParameterizedType, ? extends CollectionMetadata<?>> getCollectionMetadataBuilder() {
-        return collectionMetadataBuilder;
+	return collectionMetadataBuilder;
     }
-
 
     /**
      * @return the mapMetadataBuilder
      */
     public MetadataBuilder<ParameterizedType, ? extends MapMetadata<?, ?>> getMapMetadataBuilder() {
-        return mapMetadataBuilder;
+	return mapMetadataBuilder;
     }
 
-
-
-
     /**
-     * @param collectionMetadataBuilder the collectionMetadataBuilder to set
+     * @param collectionMetadataBuilder
+     *            the collectionMetadataBuilder to set
      */
     public void setCollectionMetadataBuilder(
-    	MetadataBuilder<ParameterizedType, ? extends CollectionMetadata<?>> collectionMetadataBuilder) {
-        this.collectionMetadataBuilder = collectionMetadataBuilder;
+	    MetadataBuilder<ParameterizedType, ? extends CollectionMetadata<?>> collectionMetadataBuilder) {
+	this.collectionMetadataBuilder = collectionMetadataBuilder;
     }
 
-
     /**
-     * @param mapMetadataBuilder the mapMetadataBuilder to set
+     * @param mapMetadataBuilder
+     *            the mapMetadataBuilder to set
      */
-    public void setMapMetadataBuilder(MetadataBuilder<ParameterizedType, ? extends MapMetadata<?, ?>> mapMetadataBuilder) {
-        this.mapMetadataBuilder = mapMetadataBuilder;
+    public void setMapMetadataBuilder(
+	    MetadataBuilder<ParameterizedType, ? extends MapMetadata<?, ?>> mapMetadataBuilder) {
+	this.mapMetadataBuilder = mapMetadataBuilder;
     }
 
     /**
      * @return the metadataManager
      */
-    public GenericObjectMetadataManager getMetadataManager() {
-        return metadataManager;
+    public ObjectMetadataManager getMetadataManager() {
+	return metadataManager;
     }
 
     /**
-     * @param metadataManager the metadataManager to set
+     * @param metadataManager
+     *            the metadataManager to set
      */
-    public void setMetadataManager(GenericObjectMetadataManager metadataManager) {
-        this.metadataManager = metadataManager;
+    public void setMetadataManager(ObjectMetadataManager metadataManager) {
+	this.metadataManager = metadataManager;
     }
-    
+
 }

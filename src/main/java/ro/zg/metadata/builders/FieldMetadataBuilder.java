@@ -23,22 +23,21 @@ import ro.zg.metadata.commons.MultitypeMetadata;
 import ro.zg.metadata.commons.MultitypeMetadataContext;
 import ro.zg.metadata.exceptions.MetadataException;
 import ro.zg.metadata.factories.MetadataContextFactory;
-import ro.zg.metadata.managers.GenericObjectMetadataManager;
 import ro.zg.metadata.managers.MetadataManager;
 
 public class FieldMetadataBuilder<F extends FieldMetadata<?>>
 	extends
-	AbstractMetadataBuilder<Field, MultitypeMetadata<Field, F>, MultitypeMetadataContext<Field, MultitypeMetadata<Field, F>>> {
+	AbstractMetadataBuilder<Field, MultitypeMetadata<Field, F>, MultitypeMetadataContext<Field, F>> {
 
     public FieldMetadataBuilder(
-	    MetadataContextFactory<Field, MultitypeMetadata<Field, F>, MultitypeMetadataContext<Field, MultitypeMetadata<Field, F>>> metadataContextFactory,
+	    MetadataContextFactory<Field, MultitypeMetadata<Field, F>, MultitypeMetadataContext<Field, F>> metadataContextFactory,
 	    MetadataManager metadataManager) {
 	super(metadataContextFactory, metadataManager);
     }
 
     @Override
     protected void buildFromMetadataContext(
-	    MultitypeMetadataContext<Field, MultitypeMetadata<Field, F>> metadataContext)
+	    MultitypeMetadataContext<Field, F> metadataContext)
 	    throws MetadataException {
 	Field field = metadataContext.getSource();
 

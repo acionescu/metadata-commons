@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package ro.zg.metadata.commons;
+package ro.zg.metadata.mappers.validation;
 
 import java.lang.annotation.Annotation;
 
-public class FieldAnnotationMapperContext<A extends Annotation,F extends FieldMetadata<?>, P extends ObjectMetadata<?, F>> extends AnnotationProcessorContext<A,F>{
-    private FieldAnnotationContext<P> fieldAnnotationContext;
-    
-    
-    public FieldAnnotationMapperContext(A annotation, FieldAnnotationContext<P> fieldAnnotationContext) {
-	super(annotation);
-	this.fieldAnnotationContext = fieldAnnotationContext;
-    }
+import ro.zg.metadata.commons.AnnotationMapperContext;
+import ro.zg.metadata.commons.Metadata;
+import ro.zg.metadata.mappers.BaseAnnotationMappersManager;
 
-
-    /**
-     * @return the fieldAnnotationContext
-     */
-    public FieldAnnotationContext<P> getFieldAnnotationContext() {
-        return fieldAnnotationContext;
-    }
+public class SimpleObjectAnnotationMappersManager extends BaseAnnotationMappersManager<AnnotationMapperContext<Annotation, Metadata<?>>>{
 
 }

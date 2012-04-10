@@ -20,10 +20,10 @@ import java.lang.reflect.Type;
 import java.util.Hashtable;
 import java.util.Map;
 
-import ro.zg.metadata.commons.AnnotationMappersManager;
 import ro.zg.metadata.commons.AnnotationProcessorContext;
 import ro.zg.metadata.commons.Metadata;
 import ro.zg.metadata.commons.MetadataContext;
+import ro.zg.metadata.commons.MultitypeAnnotationMappersManager;
 import ro.zg.metadata.exceptions.MetadataException;
 import ro.zg.metadata.factories.MetadataContextFactory;
 import ro.zg.metadata.managers.MetadataManager;
@@ -34,7 +34,7 @@ public abstract  class AbstractMetadataBuilder<T, M extends Metadata<?>, C exten
 	private MetadataManager metadataManager;
 	private Map<T, C> pendingMetadata = new Hashtable<T, C>();
 	
-	private AnnotationMappersManager<AnnotationProcessorContext<? extends Annotation, C>> annotationMappersManager;
+	private MultitypeAnnotationMappersManager<AnnotationProcessorContext<? extends Annotation, C>> annotationMappersManager;
 
 	public AbstractMetadataBuilder(
 			MetadataContextFactory<T, M, C> metadataContextFactory,
@@ -77,5 +77,31 @@ public abstract  class AbstractMetadataBuilder<T, M extends Metadata<?>, C exten
 
 	protected abstract void buildFromMetadataContext(C metadataContext)
 			throws MetadataException;
+
+	public MetadataContextFactory<T, M, C> getMetadataContextFactory() {
+	    return metadataContextFactory;
+	}
+
+	public void setMetadataContextFactory(
+		MetadataContextFactory<T, M, C> metadataContextFactory) {
+	    this.metadataContextFactory = metadataContextFactory;
+	}
+
+	public MetadataManager getMetadataManager() {
+	    return metadataManager;
+	}
+
+	public void setMetadataManager(MetadataManager metadataManager) {
+	    this.metadataManager = metadataManager;
+	}
+
+	public MultitypeAnnotationMappersManager<AnnotationProcessorContext<? extends Annotation, C>> getAnnotationMappersManager() {
+	    return annotationMappersManager;
+	}
+
+	public void setAnnotationMappersManager(
+		MultitypeAnnotationMappersManager<AnnotationProcessorContext<? extends Annotation, C>> annotationMappersManager) {
+	    this.annotationMappersManager = annotationMappersManager;
+	}
 
 }

@@ -17,21 +17,23 @@ package ro.zg.metadata.commons;
 
 import ro.zg.metadata.managers.MetadataManager;
 
-public class MultitypeMetadataContext<S, M extends MultitypeMetadata<S,?>> extends MetadataContext<S, M>{
+public class MultitypeMetadataContext<S, M extends Metadata<?>>
+	extends MetadataContext<S, MultitypeMetadata<S, M>> {
 
-    
-    
     public MultitypeMetadataContext(S source) {
 	super(source);
+	setMetadata(new MultitypeMetadata<S, M>());
     }
 
-    public MultitypeMetadataContext(S source, MetadataManager<S, M> metadataManager) {
+    public MultitypeMetadataContext(S source, MetadataManager metadataManager) {
 	super(source, metadataManager);
+	setMetadata(new MultitypeMetadata<S, M>());
     }
 
-    public MultitypeMetadataContext(S source, MetadataManager<S, M> metadataManager,
+    public MultitypeMetadataContext(S source, MetadataManager metadataManager,
 	    MetadataContext<?, ?> superMetadataContext) {
 	super(source, metadataManager, superMetadataContext);
+	setMetadata(new MultitypeMetadata<S, M>());
     }
 
 }

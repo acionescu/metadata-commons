@@ -19,6 +19,6 @@ import java.lang.annotation.Annotation;
 
 import ro.zg.metadata.exceptions.MetadataException;
 
-public interface AnnotationMappersManager<C extends AnnotationProcessorContext<? extends Annotation,? extends MetadataContext<?, ? extends Metadata<?>>>> {
+public interface AnnotationMappersManager<C extends AnnotationMapperContext<? extends Annotation, ? extends Metadata<?>>> {
     void map(C amc) throws MetadataException;
 }

@@ -18,7 +18,7 @@ package ro.zg.metadata.factories;
 import ro.zg.metadata.commons.Metadata;
 import ro.zg.metadata.commons.MetadataContext;
 
-public interface MetadataContextFactory<T,M extends Metadata<?>,C extends MetadataContext<T,M>> {
+public interface MetadataContextFactory<T,M extends Metadata<?>,C extends MetadataContext<T,? extends Metadata<?>>> {
 
     C createMetadataContext(T source);
 }

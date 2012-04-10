@@ -21,7 +21,7 @@ import ro.zg.metadata.commons.ArrayMetadata;
 import ro.zg.metadata.commons.MetadataContext;
 import ro.zg.metadata.exceptions.MetadataException;
 import ro.zg.metadata.factories.MetadataContextFactory;
-import ro.zg.metadata.managers.GenericObjectMetadataManager;
+import ro.zg.metadata.managers.ObjectMetadataManager;
 
 public class ArrayMetadataBuilder
 	extends
@@ -29,15 +29,14 @@ public class ArrayMetadataBuilder
 
     public ArrayMetadataBuilder(
 	    MetadataContextFactory<GenericArrayType, ArrayMetadata<?>, MetadataContext<GenericArrayType, ArrayMetadata<?>>> metadataContextFactory,
-	    GenericObjectMetadataManager metadataManager) {
+	    ObjectMetadataManager metadataManager) {
 	super(metadataContextFactory, metadataManager);
-	// TODO Auto-generated constructor stub
     }
 
     @Override
-    protected void buildFromMetadataContext(MetadataContext<GenericArrayType, ArrayMetadata<?>> metadataContext)
+    protected void buildFromMetadataContext(
+	    MetadataContext<GenericArrayType, ArrayMetadata<?>> metadataContext)
 	    throws MetadataException {
-	// TODO Auto-generated method stub
 
     }
 

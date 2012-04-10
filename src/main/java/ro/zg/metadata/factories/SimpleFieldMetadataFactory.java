@@ -25,5 +25,10 @@ public class SimpleFieldMetadataFactory<T> implements MetadataDecoratorFactory<T
 	return new FieldMetadataImpl<T>(nestedMetadata);
     }
 
+    @Override
+    public FieldMetadataImpl<T> createMetadata() {
+	return new FieldMetadataImpl<T>();
+    }
+
   
 }

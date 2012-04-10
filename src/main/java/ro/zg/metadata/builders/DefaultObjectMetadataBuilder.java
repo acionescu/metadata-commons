@@ -15,31 +15,43 @@
  ******************************************************************************/
 package ro.zg.metadata.builders;
 
-import ro.zg.metadata.commons.ObjectMetadata;
+import ro.zg.metadata.commons.MultitypeMetadata;
+import ro.zg.metadata.commons.MultitypeMetadataContext;
 import ro.zg.metadata.commons.ObjectMetadataImpl;
-import ro.zg.metadata.factories.MetadataFactory;
-import ro.zg.metadata.factories.ObjectMetadataFactory;
-import ro.zg.metadata.managers.GenericObjectMetadataManager;
+import ro.zg.metadata.factories.MetadataContextFactory;
+import ro.zg.metadata.managers.ObjectMetadataManager;
 
 public class DefaultObjectMetadataBuilder extends
-		ObjectMetadataBuilder<ObjectMetadataImpl<?, ?>> {
+	ObjectMetadataBuilder<ObjectMetadataImpl<?, ?>> {
 
-	public DefaultObjectMetadataBuilder(GenericObjectMetadataManager metadataManager) {
-		super(new ObjectMetadataFactory(), metadataManager);
-	}
+    // public DefaultObjectMetadataBuilder(ObjectMetadataManager
+    // metadataManager) {
+    // // MetadataContextFactory<Type, MultitypeMetadata<Type,?>,
+    // MultitypeMetadataContext<Type, MultitypeMetadata<Type,?>>> mcf = new
+    // MultitypeMetadataContextFactory<Type, MultitypeMetadata<Type,?>>();
+    // super(new MultitypeMetadataContextFactory(), metadataManager);
+    // }
+    //
+    // public DefaultObjectMetadataBuilder(
+    // MetadataFactory<Class<?>, ObjectMetadataImpl<?, ?>> metadataFactory,
+    // ObjectMetadataManager metadataManager) {
+    // super(new MultitypeMetadataContextFactory(), metadataManager);
+    // }
 
-	public DefaultObjectMetadataBuilder(
-			MetadataFactory<Class<?>, ObjectMetadataImpl<?, ?>> metadataFactory,
-			GenericObjectMetadataManager metadataManager) {
-		super(metadataFactory, metadataManager);
-	}
+    public DefaultObjectMetadataBuilder(
+	    MetadataContextFactory<Class<?>, MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, ?>>, MultitypeMetadataContext<Class<?>, ObjectMetadataImpl<?, ?>>> metadataContextFactory,
+	    ObjectMetadataManager metadataManager) {
+	super(metadataContextFactory, metadataManager);
+	setFieldMetadataBuilder(new DefaultFieldMetadataBuilder(
+		(MetadataContextFactory) metadataContextFactory,
+		metadataManager));
+    }
 
-	@Override
-	protected void populateObjectMetadataFromSuperTypeMetadata(
-			ObjectMetadataImpl<?, ?> objectMetadata,
-			ObjectMetadata<?, ?> superTypeMetadata) {
-		// TODO Auto-generated method stub
+    @Override
+    protected void populateObjectMetadataFromSuperTypeMetadata(
+	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, ?>> targetMetadata,
+	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, ?>> superTypeMetadata) {
 
-	}
+    }
 
 }

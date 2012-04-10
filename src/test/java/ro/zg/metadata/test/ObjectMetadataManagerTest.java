@@ -18,6 +18,7 @@ package ro.zg.metadata.test;
 import org.junit.Before;
 import org.junit.Test;
 
+import ro.zg.metadata.annotations.SimpleMetadataTypes;
 import ro.zg.metadata.commons.MetadataBuildersManager;
 import ro.zg.metadata.commons.MetadataImpl;
 import ro.zg.metadata.commons.ObjectMetadata;
@@ -33,13 +34,14 @@ public class ObjectMetadataManagerTest {
     public void init() {
 	ObjectMetadataManagerConfig objectMetadataManagerConfig = new ObjectMetadataManagerConfig();
 	omm = new ObjectMetadataManager(objectMetadataManagerConfig);
-	MetadataBuildersManager metadataBuildersManager = new MetadataBuildersManager((GenericObjectMetadataManager)omm);
+	MetadataBuildersManager metadataBuildersManager = new MetadataBuildersManager(omm);
 	omm.setMetadataBuildersManager(metadataBuildersManager);
     }
     
     @Test
     public void testGetMetadata() throws MetadataException {
-	ObjectMetadata<MetadataImpl, ?> om = omm.getObjectMultitypeMetadata(MetadataImpl.class);
+//	ObjectMetadata<MetadataImpl, ?> om = omm.getObjectMultitypeMetadata(MetadataImpl.class);
+	ObjectMetadata<MetadataImpl<?>, ?> om = omm.getobjectMetadata(MetadataImpl.class, SimpleMetadataTypes.SIMPLE);
 	System.out.println(om.getFields());
     }
 

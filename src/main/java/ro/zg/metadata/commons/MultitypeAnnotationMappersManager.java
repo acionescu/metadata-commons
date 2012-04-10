@@ -21,30 +21,53 @@ import java.util.Map;
 
 import ro.zg.metadata.annotations.AnnotationType;
 import ro.zg.metadata.exceptions.MetadataException;
+import ro.zg.metadata.factories.MetadataFactory;
 
-public abstract class MultitypeAnnotationMappersManager<C extends AnnotationProcessorContext<?, ?>> implements
-	AnnotationMappersManager<C> {
-    private Map<String, AnnotationMappersManager<AnnotationProcessorContext<?, ?>>> annotationMappersManagers = new HashMap<String, AnnotationMappersManager<AnnotationProcessorContext<?, ?>>>();
-    protected Map<String,String> typeDependencies=new HashMap<String, String>();
-    
-    
-    @Override
-    public void map(C amc) throws MetadataException {
-	Class<? extends Annotation> annotationType = amc.getAnnotation().annotationType();
+public abstract class MultitypeAnnotationMappersManager<C extends AnnotationProcessorContext<?, ?>> {
+    private Map<String, AnnotationMappersManager<AnnotationMapperContext<Annotation, Metadata<?>>>> annotationMappersManagers = new HashMap<String, AnnotationMappersManager<AnnotationMapperContext<Annotation, Metadata<?>>>>();
+    protected Map<String, String> typeDependencies = new HashMap<String, String>();
+    protected Map metadataFactories = new HashMap();
+
+    public void map(C apc) throws MetadataException {
+	Class<? extends Annotation> annotationType = apc.getAnnotation()
+		.annotationType();
 	String mt = annotationType.getAnnotation(AnnotationType.class).value();
-	AnnotationMappersManager<AnnotationProcessorContext<?, ?>> annotationMappersManager = annotationMappersManagers
+	AnnotationMappersManager<AnnotationMapperContext<Annotation, Metadata<?>>> annotationMappersManager = annotationMappersManagers
 		.get(mt);
 
 	if (annotationMappersManager != null) {
-	    prepareContext(amc, mt);
-	    annotationMappersManager.map(amc);
+	    annotationMappersManager.map(getAnnotationMapperContext(apc, mt));
 	}
     }
 
-    protected abstract void prepareContext(C amc, String type);
+    protected AnnotationMapperContext<Annotation, Metadata<?>> getAnnotationMapperContext(
+	    C amc, String type) {
+	MultitypeMetadataContext<?, Metadata<?>> mmc = (MultitypeMetadataContext<?, Metadata<?>>) amc
+		.getMetadataContext();
+	MultitypeMetadata<?, Metadata<?>> mm = mmc.getMetadata();
+	Metadata<?> currentMetadata = mm.getMetadataByType(type);
+	if (currentMetadata == null) {
+	    currentMetadata = createMetadataForType(type, mmc.getSource());
+	    mm.addMetadataForType(currentMetadata, type);
+	}
+	return new AnnotationMapperContext<Annotation, Metadata<?>>(
+		amc.getAnnotation(), currentMetadata);
+    }
 
-    public void addMapper(String type, AnnotationMappersManager<? extends AnnotationProcessorContext<?, ?>> mappersManager) {
-	annotationMappersManagers.put(type, (AnnotationMappersManager) mappersManager);
+    private Metadata<?> createMetadataForType(String type, Object source) {
+	MetadataFactory metadataFactory = (MetadataFactory)metadataFactories.get(type);
+	if (metadataFactory == null) {
+	    throw new IllegalArgumentException(
+		    "Factory missing for metadata type: '" + type + "'");
+	}
+	return metadataFactory.createMetadata(source.getClass());
+    }
+
+    public void addMapper(
+	    String type,
+	    AnnotationMappersManager<? extends AnnotationMapperContext<Annotation, Metadata<?>>> mappersManager) {
+	annotationMappersManagers.put(type,
+		(AnnotationMappersManager) mappersManager);
     }
 
     protected String getTypeDependency(String type) {

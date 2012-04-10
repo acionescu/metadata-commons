@@ -27,28 +27,44 @@ import ro.zg.metadata.builders.MetadataBuilder;
 import ro.zg.metadata.builders.ParameterizedTypeMetadataBuilder;
 import ro.zg.metadata.exceptions.MetadataErrorType;
 import ro.zg.metadata.exceptions.MetadataException;
-import ro.zg.metadata.managers.GenericObjectMetadataManager;
+import ro.zg.metadata.factories.MetadataContextFactory;
+import ro.zg.metadata.factories.MultitypeMetadataContextFactory;
 import ro.zg.metadata.managers.ObjectMetadataManager;
 import ro.zg.util.data.GenericNameValue;
 import ro.zg.util.data.reflection.ReflectionUtility;
 
-public class MetadataBuildersManager implements MetadataBuilder<Type, Metadata<?>> {
+public class MetadataBuildersManager implements
+	MetadataBuilder<Type, Metadata<?>> {
     private Map<Class<?>, MetadataBuilder<Type, Metadata<?>>> metadataBuilders = new HashMap<Class<?>, MetadataBuilder<Type, Metadata<?>>>();
 
-    public MetadataBuildersManager(GenericObjectMetadataManager metadataManager) {
-	addMetadataBuilder(Class.class, new DefaultObjectMetadataBuilder(metadataManager));
-	addMetadataBuilder(GenericArrayType.class, new ArrayMetadataBuilder(metadataManager));
-	addMetadataBuilder(ParameterizedType.class, new ParameterizedTypeMetadataBuilder(
-		(ObjectMetadataManager) metadataManager));
+    public MetadataBuildersManager(ObjectMetadataManager metadataManager) {
+	this(new MultitypeMetadataContextFactory(), metadataManager);
+    }
+
+    public MetadataBuildersManager(
+	    MetadataContextFactory<?, ? extends Metadata<?>, ? extends MetadataContext<?, Metadata<?>>> metadataContextFactory,
+	    ObjectMetadataManager metadataManager) {
+
+	addMetadataBuilder(Class.class, new DefaultObjectMetadataBuilder(
+		(MetadataContextFactory) metadataContextFactory,
+		metadataManager));
+	addMetadataBuilder(GenericArrayType.class, new ArrayMetadataBuilder(
+		(MetadataContextFactory) metadataContextFactory,
+		metadataManager));
+	addMetadataBuilder(ParameterizedType.class,
+		new ParameterizedTypeMetadataBuilder(
+			(MetadataContextFactory) metadataContextFactory,
+			metadataManager));
     }
 
     @Override
     public Metadata<?> buildMetadata(Type type) throws MetadataException {
 	MetadataBuilder<Type, Metadata<?>> metadataBuilder = null;
 	if (type instanceof Class) {
-	    Class<?> clazz = (Class<?>)type;
-	  
-	    if (ReflectionUtility.checkSimpleFieldType(clazz) || Class.class.isAssignableFrom(clazz)) {
+	    Class<?> clazz = (Class<?>) type;
+
+	    if (ReflectionUtility.checkSimpleFieldType(clazz)
+		    || Class.class.isAssignableFrom(clazz)) {
 		return new MetadataImpl(clazz);
 	    }
 
@@ -58,8 +74,8 @@ public class MetadataBuildersManager implements MetadataBuilder<Type, Metadata<?
 	} else if (type instanceof GenericArrayType) {
 	    metadataBuilder = metadataBuilders.get(GenericArrayType.class);
 	} else {
-	    throw new MetadataException(MetadataErrorType.UNKNOWN_OBJECT_TYPE, new GenericNameValue("type",
-		    type.getClass()));
+	    throw new MetadataException(MetadataErrorType.UNKNOWN_OBJECT_TYPE,
+		    new GenericNameValue("type", type.getClass()));
 	}
 
 	if (metadataBuilder != null) {
@@ -69,8 +85,8 @@ public class MetadataBuildersManager implements MetadataBuilder<Type, Metadata<?
 		new GenericNameValue("type", type.getClass()));
     }
 
-    protected <T extends Type, M extends Metadata<?>> void addMetadataBuilder(Class<?> clazz,
-	    MetadataBuilder<T, M> metadataBuilder) {
+    protected <T extends Type, M extends Metadata<?>> void addMetadataBuilder(
+	    Class<?> clazz, MetadataBuilder<T, M> metadataBuilder) {
 	metadataBuilders.put(clazz, (MetadataBuilder) metadataBuilder);
     }
 

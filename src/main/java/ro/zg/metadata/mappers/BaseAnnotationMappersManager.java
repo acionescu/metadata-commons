@@ -23,13 +23,11 @@ import java.util.Set;
 import ro.zg.metadata.commons.AnnotationMapper;
 import ro.zg.metadata.commons.AnnotationMapperContext;
 import ro.zg.metadata.commons.AnnotationMappersManager;
-import ro.zg.metadata.commons.AnnotationProcessorContext;
 import ro.zg.metadata.commons.Metadata;
-import ro.zg.metadata.commons.MetadataContext;
 import ro.zg.metadata.exceptions.MetadataException;
 
-public class BaseAnnotationMappersManager<C extends AnnotationProcessorContext<? extends Annotation,? extends MetadataContext<?, Metadata<?>>>> implements AnnotationMappersManager<C>{
-    protected Map<Class<? extends Annotation>,AnnotationMapper<AnnotationMapperContext<?,?>>> mappers=new HashMap<Class<? extends Annotation>,AnnotationMapper<? extends AnnotationMapperContext<?,?>>>();
+public class BaseAnnotationMappersManager<C extends AnnotationMapperContext<? extends Annotation, ? extends Metadata<?>>> implements AnnotationMappersManager<C>{
+    protected Map<Class<? extends Annotation>,AnnotationMapper<AnnotationMapperContext<?,?>>> mappers=new HashMap<Class<? extends Annotation>,AnnotationMapper<AnnotationMapperContext<?,?>>>();
     
     public void map(C amc) throws MetadataException {
 	AnnotationMapper<AnnotationMapperContext<?,?>> mapper = mappers.get(amc.getAnnotation().annotationType());
@@ -45,7 +43,7 @@ public class BaseAnnotationMappersManager<C extends AnnotationProcessorContext<?
 	return mappers.keySet();
     }
     
-    protected void addMapper(Class<? extends Annotation> a, AnnotationMapper<C> mapper) {
+    protected void addMapper(Class<? extends Annotation> a, AnnotationMapper<AnnotationMapperContext<?,?>> mapper) {
 	mappers.put(a, mapper);
     }
 }
