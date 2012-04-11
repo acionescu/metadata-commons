@@ -25,9 +25,10 @@ import ro.zg.metadata.exceptions.MetadataException;
 import ro.zg.metadata.factories.MetadataContextFactory;
 import ro.zg.metadata.managers.MetadataManager;
 
-public class FieldMetadataBuilder<F extends FieldMetadata<?>>
-	extends
-	AbstractMetadataBuilder<Field, MultitypeMetadata<Field, F>, MultitypeMetadataContext<Field, F>> {
+public class FieldMetadataBuilder<F extends FieldMetadata<?>> extends
+// AbstractMetadataBuilder<Field, MultitypeMetadata<Field, F>,
+// MultitypeMetadataContext<Field, F>> {
+	MultitypeMetadataBuilder<Field, F> {
 
     public FieldMetadataBuilder(
 	    MetadataContextFactory<Field, MultitypeMetadata<Field, F>, MultitypeMetadataContext<Field, F>> metadataContextFactory,
@@ -40,12 +41,11 @@ public class FieldMetadataBuilder<F extends FieldMetadata<?>>
 	    MultitypeMetadataContext<Field, F> metadataContext)
 	    throws MetadataException {
 	Field field = metadataContext.getSource();
-
+	/*
+	 * TODO: don't forget to check that this field should actually be
+	 * processed, stop processing if it is transient or static..
+	 */
 	for (Annotation a : field.getAnnotations()) {
-	    /*
-	     * TODO: don't forget to check that this field should actually be
-	     * processed, stop processing if it is transient or static..
-	     */
 	    processAnnotation(a, metadataContext);
 	}
 

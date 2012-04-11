@@ -52,7 +52,9 @@ public abstract  class AbstractMetadataBuilder<T, M extends Metadata<?>, C exten
 		C metadataContext = createMetadataContext(type);
 		metadataContext.setMetadataManager(metadataManager);
 		pendingMetadata.put(type, metadataContext);
+		beforeBuild(metadataContext);
 		buildFromMetadataContext(metadataContext);
+		afterBuild(metadataContext);
 		pendingMetadata.remove(type);
 		return metadataContext.getMetadata();
 	}
@@ -77,6 +79,22 @@ public abstract  class AbstractMetadataBuilder<T, M extends Metadata<?>, C exten
 
 	protected abstract void buildFromMetadataContext(C metadataContext)
 			throws MetadataException;
+	
+	/**
+	 * Override if needed
+	 * @param metadataContext
+	 */
+	protected void beforeBuild(C metadataContext){
+	    
+	}
+	
+	/**
+	 * Override if needed
+	 * @param metadataContext
+	 */
+	protected void afterBuild(C metadataContext){
+	    
+	}
 
 	public MetadataContextFactory<T, M, C> getMetadataContextFactory() {
 	    return metadataContextFactory;

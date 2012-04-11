@@ -15,14 +15,9 @@
  ******************************************************************************/
 package ro.zg.metadata.mappers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ro.zg.metadata.annotations.SimpleMetadataTypes;
 import ro.zg.metadata.commons.AnnotationProcessorContext;
-import ro.zg.metadata.commons.Metadata;
 import ro.zg.metadata.commons.MultitypeAnnotationMappersManager;
-import ro.zg.metadata.factories.MetadataFactory;
 import ro.zg.metadata.factories.ObjectMetadataFactory;
 
 public class ObjectAnnotationMappersManager<C extends AnnotationProcessorContext<?, ?>>

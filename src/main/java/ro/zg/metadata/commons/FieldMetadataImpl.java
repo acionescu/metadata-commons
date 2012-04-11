@@ -55,8 +55,9 @@ public class FieldMetadataImpl<T> extends MetadataDecorator<T, Metadata<T>> impl
     protected Class<? extends T> implementation;
     
     
-    public FieldMetadataImpl() {
+    public FieldMetadataImpl(String name) {
 	super();
+	this.name=name;
     }
     
     

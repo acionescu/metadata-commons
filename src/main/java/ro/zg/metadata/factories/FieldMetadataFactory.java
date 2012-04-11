@@ -15,13 +15,15 @@
  ******************************************************************************/
 package ro.zg.metadata.factories;
 
+import java.lang.reflect.Field;
+
 import ro.zg.metadata.commons.FieldMetadataImpl;
 
-public class FieldMetadataFactory implements  MetadataFactory<Class<?>, FieldMetadataImpl<?>>{
+public class FieldMetadataFactory implements  MetadataFactory<Field, FieldMetadataImpl<?>>{
 
     @Override
-    public FieldMetadataImpl<?> createMetadata(Class<?> type) {
-	return new FieldMetadataImpl();
+    public FieldMetadataImpl<?> createMetadata(Field field) {
+	return new FieldMetadataImpl(field.getName());
     }
     
    

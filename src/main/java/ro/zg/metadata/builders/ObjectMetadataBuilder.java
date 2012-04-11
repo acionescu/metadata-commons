@@ -17,6 +17,7 @@ package ro.zg.metadata.builders;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Map;
 
 import ro.zg.metadata.commons.FieldMetadata;
 import ro.zg.metadata.commons.MultitypeMetadata;
@@ -26,9 +27,11 @@ import ro.zg.metadata.exceptions.MetadataException;
 import ro.zg.metadata.factories.MetadataContextFactory;
 import ro.zg.metadata.managers.ObjectMetadataManager;
 
-public abstract class ObjectMetadataBuilder<O extends ObjectMetadata<?, ?>>
+public abstract class ObjectMetadataBuilder<O extends ObjectMetadata<?, FieldMetadata<?>>>
 	extends
-	AbstractMetadataBuilder<Class<?>, MultitypeMetadata<Class<?>, O>, MultitypeMetadataContext<Class<?>, O>> {
+//	AbstractMetadataBuilder<Class<?>, MultitypeMetadata<Class<?>, O>, MultitypeMetadataContext<Class<?>, O>> {
+	MultitypeMetadataBuilder<Class<?>, O> {
+    
     private FieldMetadataBuilder<? extends FieldMetadata<?>> fieldMetadataBuilder;
 
     public ObjectMetadataBuilder(
@@ -81,14 +84,24 @@ public abstract class ObjectMetadataBuilder<O extends ObjectMetadata<?, ?>>
 	    throws MetadataException {
 	Class<?> clazz = metadataContext.getSource();
 	for (Field f : clazz.getDeclaredFields()) {
-	    processFieldAnnotations(f);
+	    absorbFieldMetadata(metadataContext, getFieldMetadata(f));
 	}
     }
 
-    private void processFieldAnnotations(Field field) throws MetadataException {
-	MultitypeMetadata<Field, ? extends FieldMetadata<?>> fieldMetadata = fieldMetadataBuilder
+    private MultitypeMetadata<Field, FieldMetadata<?>> getFieldMetadata(Field field) throws MetadataException {
+	MultitypeMetadata<Field, FieldMetadata<?>> fieldMetadata = (MultitypeMetadata<Field, FieldMetadata<?>>)fieldMetadataBuilder
 		.buildMetadata(field);
+	return fieldMetadata;
     }
+    
+    private void absorbFieldMetadata(MultitypeMetadataContext<Class<?>, O> omc, MultitypeMetadata<Field, FieldMetadata<?>> fm){
+	for(Map.Entry<String, FieldMetadata<?>> e : fm.getMetadatas().entrySet()){
+	    O om = getMetadataFromContext(omc, e.getKey(),true);
+	    om.acceptField(e.getValue());
+	}
+    }
+    
+    
 
     // private void processFieldAnnotations(Field field,
     // ClassAnnotationContext<O> cac) throws MetadataException {

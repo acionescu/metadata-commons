@@ -15,14 +15,18 @@
  ******************************************************************************/
 package ro.zg.metadata.builders;
 
+import ro.zg.metadata.annotations.SimpleMetadataTypes;
+import ro.zg.metadata.commons.FieldMetadata;
 import ro.zg.metadata.commons.MultitypeMetadata;
 import ro.zg.metadata.commons.MultitypeMetadataContext;
 import ro.zg.metadata.commons.ObjectMetadataImpl;
 import ro.zg.metadata.factories.MetadataContextFactory;
+import ro.zg.metadata.factories.MetadataFactory;
+import ro.zg.metadata.factories.ObjectMetadataFactory;
 import ro.zg.metadata.managers.ObjectMetadataManager;
 
 public class DefaultObjectMetadataBuilder extends
-	ObjectMetadataBuilder<ObjectMetadataImpl<?, ?>> {
+	ObjectMetadataBuilder<ObjectMetadataImpl<?, FieldMetadata<?>>> {
 
     // public DefaultObjectMetadataBuilder(ObjectMetadataManager
     // metadataManager) {
@@ -39,18 +43,20 @@ public class DefaultObjectMetadataBuilder extends
     // }
 
     public DefaultObjectMetadataBuilder(
-	    MetadataContextFactory<Class<?>, MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, ?>>, MultitypeMetadataContext<Class<?>, ObjectMetadataImpl<?, ?>>> metadataContextFactory,
+	    MetadataContextFactory<Class<?>, MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>>, MultitypeMetadataContext<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>>> metadataContextFactory,
 	    ObjectMetadataManager metadataManager) {
 	super(metadataContextFactory, metadataManager);
 	setFieldMetadataBuilder(new DefaultFieldMetadataBuilder(
 		(MetadataContextFactory) metadataContextFactory,
 		metadataManager));
+	addMetadataFactory(SimpleMetadataTypes.SIMPLE,
+		(MetadataFactory)new ObjectMetadataFactory());
     }
 
     @Override
     protected void populateObjectMetadataFromSuperTypeMetadata(
-	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, ?>> targetMetadata,
-	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, ?>> superTypeMetadata) {
+	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>> targetMetadata,
+	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>> superTypeMetadata) {
 
     }
 

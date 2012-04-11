@@ -62,12 +62,12 @@ public class ObjectMetadataImpl<T,F extends FieldMetadata<?>> extends MetadataIm
 	fields = new LinkedHashMap<String, F>();
     }
     
-    protected void addFieldMetadata(F fiedlMetadata) {
+    protected void addFieldMetadata(F fieldMetadata) {
 	if(fields==null) {
 	    initFields();
 	}
-	String fieldName = fiedlMetadata.getName();
-	fields.put(fieldName, fiedlMetadata);
+	String fieldName = fieldMetadata.getName();
+	fields.put(fieldName, fieldMetadata);
     }
     
 

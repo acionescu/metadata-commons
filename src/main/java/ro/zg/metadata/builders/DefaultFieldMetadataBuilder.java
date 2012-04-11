@@ -18,13 +18,16 @@ package ro.zg.metadata.builders;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
+import ro.zg.metadata.annotations.SimpleMetadataTypes;
 import ro.zg.metadata.commons.AnnotationProcessorContext;
 import ro.zg.metadata.commons.FieldMetadataImpl;
 import ro.zg.metadata.commons.MultitypeMetadata;
 import ro.zg.metadata.commons.MultitypeMetadataContext;
+import ro.zg.metadata.factories.FieldMetadataFactory;
 import ro.zg.metadata.factories.MetadataContextFactory;
 import ro.zg.metadata.managers.MetadataManager;
 import ro.zg.metadata.mappers.FieldAnnotationMappersManager;
+import ro.zg.metadata.mappers.validation.SimpleFieldAnnotationMappersManager;
 
 public class DefaultFieldMetadataBuilder extends FieldMetadataBuilder<FieldMetadataImpl<?>>{
 
@@ -33,6 +36,10 @@ public class DefaultFieldMetadataBuilder extends FieldMetadataBuilder<FieldMetad
 	    MetadataManager metadataManager) {
 	super(metadataContextFactory, metadataManager);
 	setAnnotationMappersManager(new FieldAnnotationMappersManager<AnnotationProcessorContext<? extends Annotation,MultitypeMetadataContext<Field,FieldMetadataImpl<?>>>>());
+	addMapper(SimpleMetadataTypes.SIMPLE,
+		new SimpleFieldAnnotationMappersManager());
+	addMetadataFactory(SimpleMetadataTypes.SIMPLE,
+		new FieldMetadataFactory());
     }
 
 }
