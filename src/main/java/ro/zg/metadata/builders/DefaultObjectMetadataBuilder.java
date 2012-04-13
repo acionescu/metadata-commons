@@ -26,7 +26,7 @@ import ro.zg.metadata.factories.ObjectMetadataFactory;
 import ro.zg.metadata.managers.ObjectMetadataManager;
 
 public class DefaultObjectMetadataBuilder extends
-	ObjectMetadataBuilder<ObjectMetadataImpl<?, FieldMetadata<?>>> {
+	ObjectMetadataBuilder<ObjectMetadataImpl<?, FieldMetadata<?,?>>> {
 
     // public DefaultObjectMetadataBuilder(ObjectMetadataManager
     // metadataManager) {
@@ -43,7 +43,7 @@ public class DefaultObjectMetadataBuilder extends
     // }
 
     public DefaultObjectMetadataBuilder(
-	    MetadataContextFactory<Class<?>, MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>>, MultitypeMetadataContext<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>>> metadataContextFactory,
+	    MetadataContextFactory<Class<?>, MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?,?>>>, MultitypeMetadataContext<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?,?>>>> metadataContextFactory,
 	    ObjectMetadataManager metadataManager) {
 	super(metadataContextFactory, metadataManager);
 	setFieldMetadataBuilder(new DefaultFieldMetadataBuilder(
@@ -55,8 +55,8 @@ public class DefaultObjectMetadataBuilder extends
 
     @Override
     protected void populateObjectMetadataFromSuperTypeMetadata(
-	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>> targetMetadata,
-	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?>>> superTypeMetadata) {
+	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?,?>>> targetMetadata,
+	    MultitypeMetadata<Class<?>, ObjectMetadataImpl<?, FieldMetadata<?,?>>> superTypeMetadata) {
 
     }
 

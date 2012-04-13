@@ -15,18 +15,38 @@
  ******************************************************************************/
 package ro.zg.metadata.commons;
 
-public interface MetadataDecorator<T, M extends Metadata<T>> extends Metadata<T>{
+public class MetadataDecoratorImpl<T, M extends Metadata<T>> extends MetadataImpl<T> implements MetadataDecorator<T, M>{
+    protected M nestedMetadata;
+    private boolean required;
+
     /**
      * @return the nestedMetadata
      */
-    public M getNestedMetadata();
+    public M getNestedMetadata() {
+        return nestedMetadata;
+    }
 
     /**
      * @param nestedMetadata the nestedMetadata to set
      */
-    public void setNestedMetadata(M nestedMetadata);
+    public void setNestedMetadata(M nestedMetadata) {
+        this.nestedMetadata = nestedMetadata;
+    }
 
-    public boolean isRequired();
+    public boolean isRequired() {
+        return required;
+    }
 
-    public void setRequired(boolean required);
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    @Override
+    public String toString() {
+	return "MetadataDecoratorImpl [nestedMetadata=" + nestedMetadata
+		+ ", required=" + required + "]";
+    }
+
+  
+    
 }

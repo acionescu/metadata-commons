@@ -16,9 +16,9 @@
 package ro.zg.metadata.factories;
 
 import ro.zg.metadata.commons.Metadata;
-import ro.zg.metadata.commons.MetadataDecorator;
+import ro.zg.metadata.commons.MetadataDecoratorImpl;
 
-public interface MetadataDecoratorFactory<T,M extends Metadata<T>,D extends MetadataDecorator<T, M>> {
+public interface MetadataDecoratorFactory<T,M extends Metadata<T>,D extends MetadataDecoratorImpl<T, M>> {
 
     D createMetadata(M nestedMetadata);
     

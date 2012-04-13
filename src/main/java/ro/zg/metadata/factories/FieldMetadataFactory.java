@@ -19,10 +19,10 @@ import java.lang.reflect.Field;
 
 import ro.zg.metadata.commons.FieldMetadataImpl;
 
-public class FieldMetadataFactory implements  MetadataFactory<Field, FieldMetadataImpl<?>>{
+public class FieldMetadataFactory implements  MetadataFactory<Field, FieldMetadataImpl<?,?>>{
 
     @Override
-    public FieldMetadataImpl<?> createMetadata(Field field) {
+    public FieldMetadataImpl<?,?> createMetadata(Field field) {
 	return new FieldMetadataImpl(field.getName());
     }
     

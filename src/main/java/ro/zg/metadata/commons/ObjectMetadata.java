@@ -19,7 +19,7 @@ import java.util.Map;
 
 import ro.zg.metadata.exceptions.MetadataException;
 
-public interface ObjectMetadata<T,F extends FieldMetadata<?>> extends Metadata<T>  {
+public interface ObjectMetadata<T,F extends FieldMetadata<?,?>> extends Metadata<T>  {
     Map<String,F> getFields();
     F getField(String name);
     ObjectMetadata<?,F> getObjectDataModelForField(String fieldName);

@@ -25,7 +25,7 @@ import ro.zg.metadata.exceptions.MetadataException;
 import ro.zg.metadata.factories.MetadataContextFactory;
 import ro.zg.metadata.managers.MetadataManager;
 
-public class FieldMetadataBuilder<F extends FieldMetadata<?>> extends
+public class FieldMetadataBuilder<F extends FieldMetadata<?,?>> extends
 // AbstractMetadataBuilder<Field, MultitypeMetadata<Field, F>,
 // MultitypeMetadataContext<Field, F>> {
 	MultitypeMetadataBuilder<Field, F> {

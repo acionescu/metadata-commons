@@ -27,12 +27,12 @@ import ro.zg.metadata.exceptions.MetadataException;
 import ro.zg.metadata.factories.MetadataContextFactory;
 import ro.zg.metadata.managers.ObjectMetadataManager;
 
-public abstract class ObjectMetadataBuilder<O extends ObjectMetadata<?, FieldMetadata<?>>>
+public abstract class ObjectMetadataBuilder<O extends ObjectMetadata<?, FieldMetadata<?,?>>>
 	extends
 //	AbstractMetadataBuilder<Class<?>, MultitypeMetadata<Class<?>, O>, MultitypeMetadataContext<Class<?>, O>> {
 	MultitypeMetadataBuilder<Class<?>, O> {
     
-    private FieldMetadataBuilder<? extends FieldMetadata<?>> fieldMetadataBuilder;
+    private FieldMetadataBuilder<? extends FieldMetadata<?,?>> fieldMetadataBuilder;
 
     public ObjectMetadataBuilder(
 	    MetadataContextFactory<Class<?>, MultitypeMetadata<Class<?>, O>, MultitypeMetadataContext<Class<?>, O>> metadataContextFactory,
@@ -88,14 +88,14 @@ public abstract class ObjectMetadataBuilder<O extends ObjectMetadata<?, FieldMet
 	}
     }
 
-    private MultitypeMetadata<Field, FieldMetadata<?>> getFieldMetadata(Field field) throws MetadataException {
-	MultitypeMetadata<Field, FieldMetadata<?>> fieldMetadata = (MultitypeMetadata<Field, FieldMetadata<?>>)fieldMetadataBuilder
+    private MultitypeMetadata<Field, FieldMetadata<?,?>> getFieldMetadata(Field field) throws MetadataException {
+	MultitypeMetadata<Field, FieldMetadata<?,?>> fieldMetadata = (MultitypeMetadata<Field, FieldMetadata<?,?>>)fieldMetadataBuilder
 		.buildMetadata(field);
 	return fieldMetadata;
     }
     
-    private void absorbFieldMetadata(MultitypeMetadataContext<Class<?>, O> omc, MultitypeMetadata<Field, FieldMetadata<?>> fm){
-	for(Map.Entry<String, FieldMetadata<?>> e : fm.getMetadatas().entrySet()){
+    private void absorbFieldMetadata(MultitypeMetadataContext<Class<?>, O> omc, MultitypeMetadata<Field, FieldMetadata<?,?>> fm){
+	for(Map.Entry<String, FieldMetadata<?,?>> e : fm.getMetadatas().entrySet()){
 	    O om = getMetadataFromContext(omc, e.getKey(),true);
 	    om.acceptField(e.getValue());
 	}
@@ -140,12 +140,12 @@ public abstract class ObjectMetadataBuilder<O extends ObjectMetadata<?, FieldMet
 	}
     }
 
-    public FieldMetadataBuilder<? extends FieldMetadata<?>> getFieldMetadataBuilder() {
+    public FieldMetadataBuilder<? extends FieldMetadata<?,?>> getFieldMetadataBuilder() {
         return fieldMetadataBuilder;
     }
 
     public void setFieldMetadataBuilder(
-    	FieldMetadataBuilder<? extends FieldMetadata<?>> fieldMetadataBuilder) {
+    	FieldMetadataBuilder<? extends FieldMetadata<?,?>> fieldMetadataBuilder) {
         this.fieldMetadataBuilder = fieldMetadataBuilder;
     }
 }

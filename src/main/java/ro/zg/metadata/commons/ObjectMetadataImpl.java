@@ -26,7 +26,7 @@ import ro.zg.util.data.GenericNameValue;
 import ro.zg.util.data.reflection.ReflectionUtility;
 
 //@Persistable
-public class ObjectMetadataImpl<T,F extends FieldMetadata<?>> extends MetadataImpl<T> implements ObjectMetadata<T, F>{
+public class ObjectMetadataImpl<T,F extends FieldMetadata<?,?>> extends MetadataImpl<T> implements ObjectMetadata<T, F>{
 //    @Implementation(type = LinkedHashMap.class)
 //    @Link(name = "object_type_fields", key = "name", lazy = false)
     protected Map<String, F> fields;

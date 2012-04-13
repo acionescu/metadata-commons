@@ -29,13 +29,13 @@ import ro.zg.metadata.managers.MetadataManager;
 import ro.zg.metadata.mappers.FieldAnnotationMappersManager;
 import ro.zg.metadata.mappers.validation.SimpleFieldAnnotationMappersManager;
 
-public class DefaultFieldMetadataBuilder extends FieldMetadataBuilder<FieldMetadataImpl<?>>{
+public class DefaultFieldMetadataBuilder extends FieldMetadataBuilder<FieldMetadataImpl<?,?>>{
 
     public DefaultFieldMetadataBuilder(
-	    MetadataContextFactory<Field, MultitypeMetadata<Field, FieldMetadataImpl<?>>, MultitypeMetadataContext<Field, FieldMetadataImpl<?>>> metadataContextFactory,
+	    MetadataContextFactory<Field, MultitypeMetadata<Field, FieldMetadataImpl<?,?>>, MultitypeMetadataContext<Field, FieldMetadataImpl<?,?>>> metadataContextFactory,
 	    MetadataManager metadataManager) {
 	super(metadataContextFactory, metadataManager);
-	setAnnotationMappersManager(new FieldAnnotationMappersManager<AnnotationProcessorContext<? extends Annotation,MultitypeMetadataContext<Field,FieldMetadataImpl<?>>>>());
+	setAnnotationMappersManager(new FieldAnnotationMappersManager<AnnotationProcessorContext<? extends Annotation,MultitypeMetadataContext<Field,FieldMetadataImpl<?,?>>>>());
 	addMapper(SimpleMetadataTypes.SIMPLE,
 		new SimpleFieldAnnotationMappersManager());
 	addMetadataFactory(SimpleMetadataTypes.SIMPLE,

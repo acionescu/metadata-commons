@@ -23,10 +23,10 @@ import ro.zg.metadata.exceptions.MetadataException;
 
 public class RequiredMapper
 	implements
-	AnnotationMapper<AnnotationMapperContext<Required, FieldMetadataImpl<?>>> {
+	AnnotationMapper<AnnotationMapperContext<Required, FieldMetadataImpl<?,?>>> {
 
     @Override
-    public void map(AnnotationMapperContext<Required, FieldMetadataImpl<?>> amc)
+    public void map(AnnotationMapperContext<Required, FieldMetadataImpl<?,?>> amc)
 	    throws MetadataException {
 	amc.getMetadata().setRequired(true);
 
